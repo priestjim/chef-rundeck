@@ -20,6 +20,12 @@ when 'debian'
 
 	dpkg_package "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['version']}.deb" do
 		action :install
+		notifies :delete, 'file[/etc/rundeck/realm.properties]'
+	end
+
+	# Erase the default realm.properties after package install, we manage that
+	file "/etc/rundeck/realm.properties" do
+		action :nothing
 	end
 
 	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
@@ -103,7 +109,7 @@ when 'debian'
 			mode 00600
 			content adminobj['ssh_key'].join("\n")
 		end
-		 
+
 	end
 
 	service 'rundeckd' do
@@ -112,4 +118,6 @@ when 'debian'
 		action [ :enable, :start ]
 	end
 
+when 'rhel'
+	# TODO
 end

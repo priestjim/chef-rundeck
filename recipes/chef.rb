@@ -16,7 +16,6 @@ end
 
 # Install the chef-rundeck gem on the Chef omnibus package. Useful workaround instead of installing RVM, a system Ruby etc
 # and it offers minimal system pollution
-
 chef_gem 'chef-rundeck'
 
 # Create the knife.rb for chef-rundck to read

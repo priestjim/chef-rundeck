@@ -1,4 +1,4 @@
-/var/log/rundeck/*.log {
+/var/log/rundeck/rundeck.audit.log /var/log/rundeck/rundeck.jobs.log /var/log/rundeck/rundeck.log /var/log/rundeck/rundeck.options.log /var/log/rundeck/service.log /var/log/rundeck/stacktrace.log {
     rotate 7
     daily
     missingok

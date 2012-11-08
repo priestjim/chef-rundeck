@@ -24,7 +24,6 @@ default['rundeck']['mail']['recipients_field'] = 'email'
 default['rundeck']['admin']['data_bag'] = 'cookies'
 default['rundeck']['admin']['data_bag_id'] = 'rundeck'
 
-default['rundeck']['proxy']['enable'] = true
 default['rundeck']['proxy']['hostname'] = 'rundeck'
 default['rundeck']['proxy']['default'] = false
 
