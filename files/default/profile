@@ -17,7 +17,8 @@ if [ ! -z $JAVA_HOME ]; then
 	JAVA_CMD=$JAVA_HOME/bin/java
 fi
 
-
+PATH=$PATH:/var/lib/rundeck/.rvm/bin
+export PATH
 
 export CLI_CP=$(find /var/lib/rundeck/cli -name \*.jar -printf %p:)
 export BOOTSTRAP_CP=$(find /var/lib/rundeck/bootstrap -name \*.jar -printf %p:)

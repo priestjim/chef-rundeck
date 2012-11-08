@@ -86,6 +86,26 @@ when 'debian'
 		mode 00644
 	end
 	
+	# SSH private key. Stored in the data bag item as an array
+	unless adminobj['ssh_key'].nil? || adminobj['ssh_key'].empty?
+
+		directory "/var/lib/rundeck/.ssh" do
+			owner 'rundeck'
+			group 'rundeck'
+			mode 00755
+			action :create
+		end
+
+		file "/var/lib/rundeck/.ssh/id_rsa" do
+			action :create
+			owner 'rundeck'
+			group 'rundeck'
+			mode 00600
+			content adminobj['ssh_key'].join("\n")
+		end
+		 
+	end
+
 	service 'rundeckd' do
 		provider Chef::Provider::Service::Upstart if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
 		supports :status => true, :restart => true

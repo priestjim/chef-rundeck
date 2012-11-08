@@ -28,5 +28,7 @@ default['rundeck']['proxy']['enable'] = true
 default['rundeck']['proxy']['hostname'] = 'rundeck'
 default['rundeck']['proxy']['default'] = false
 
-default['rundeck']['ssh']['user'] = 'rundeck'
+default['rundeck']['ssh']['user'] = 'rundeck-ssh'
 default['rundeck']['ssh']['timeout'] = 30
+
+default['rundeck']['chef']['gems'] = %w{ chef-rundeck }
