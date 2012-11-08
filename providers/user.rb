@@ -7,13 +7,12 @@
 
 action :create do
 
-	new_resource.updated_by_last_action(true)
-
 	# Check user existense in realm.properties
 	if ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_resource.name}: /)
 		new_resource.updated_by_last_action(false)
 		Chef::Log.info("Rundeck user #{new_resource.name} already exists. Please use :update action instead")
 	else
+		new_resource.updated_by_last_action(true)
 		# Append the line to realm.properties
 		::File.open(::File.join('etc','rundeck','realm.properties'), 'a') do |fp|
 			fp.puts(create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles))
@@ -29,13 +28,12 @@ action :create do
 end
 
 action :remove do
-
-	new_resource.updated_by_last_action(true)
 	
 	# Check user existense in realm.properties
 	unless ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_resource.name}: /)
 		new_resource.updated_by_last_action(false)
 	else
+		new_resource.updated_by_last_action(true)
 		fp = ::File.open(::File.join('etc','rundeck','realm.properties'), 'r')
 		newcontent = String.new
 		while line = fp.readline
@@ -56,7 +54,6 @@ action :remove do
 end
 
 action :update do
-	new_resource.updated_by_last_action(true)
 
 	new_auth_line = create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles)
 
@@ -64,6 +61,7 @@ action :update do
 		new_resource.updated_by_last_action(false)
 		Chef::Log.info("Rundeck user #{new_resource.name} already up to date")		
 	else
+		new_resource.updated_by_last_action(true)
 		fp = ::File.open(::File.join('etc','rundeck','realm.properties'), 'r')
 		newcontent = String.new
 		while line = fp.readline
