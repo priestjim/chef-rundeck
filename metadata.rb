@@ -5,8 +5,8 @@ description      "Installs/Configures chef-rundeck"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.0"
 
-%{ ubuntu debian }.each do |system|
-	supports system
+%w{ ubuntu debian }.each do |os|
+	supports os
 end
 
 depends 'java'

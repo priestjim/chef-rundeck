@@ -31,6 +31,4 @@ default['rundeck']['proxy']['default'] = false
 default['rundeck']['ssh']['user'] = 'rundeck-ssh'
 default['rundeck']['ssh']['timeout'] = 30
 
-default['rundeck']['chef']['gems'] = %w{ chef-rundeck }
-default['rundeck']['chef']['user'] = 'rundeck'
 default['rundeck']['chef']['port'] = 9998
