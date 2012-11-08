@@ -43,6 +43,7 @@ file "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem" do
 	owner 'rundeck'
 	group 'rundeck'
 	mode 00644
+	content adminobj['client_key']
 end
 
 # Create a Supervisor service that runs chef-rundeck
