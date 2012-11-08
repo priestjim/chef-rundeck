@@ -21,7 +21,7 @@ when 'debian'
 		action :install
 	end
 
-	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'],node['rundeck']['admin']['data_bag_id'])
+	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
 
 	unless Chef::Config['solo']
 		recipients = search(node['rundeck']['mail']['recipients_data_bag'],node['rundeck']['mail']['recipients_query']).
