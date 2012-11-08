@@ -47,7 +47,7 @@ end
 
 # Create a Supervisor service that runs chef-rundeck
 supervisor_service "chef-rundeck" do
-	command "/opt/chef/embedded/bin/chef-rundeck -c /var/lib/rundeck/.chef/knife.rb -u #{adminobj['client_name']} -w #{Chef::Config['chef_server_url']} -p #{node['rundeck']['chef']['port']}"
+	command "/opt/chef/embedded/bin/chef-rundeck -c /var/lib/rundeck/.chef/knife.rb -u #{node['rundeck']['ssh']['user']} -w #{Chef::Config['chef_server_url']} -p #{node['rundeck']['chef']['port']}"
 	numprocs 1
 	directory "/var/lib/rundeck"
 	autostart true
