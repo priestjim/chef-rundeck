@@ -8,7 +8,7 @@ server {
     root                            <%= node['nginx']['share_dir'] %>/html;
 
     access_log                  off;
-    error_log                   <%= node['nginx']['log_dir'] %>/<%= node['rundeck']['proxy']['hostname'] %>.error.log;
+    error_log                   <%= node['nginx']['log_dir'] %>/rundeck.error.log;
 
     proxy_redirect off;
 
