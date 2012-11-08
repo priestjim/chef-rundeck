@@ -20,7 +20,7 @@ framework.application.properties =
 # Email settings
 #
 # recipient addresses to send email (comma separated)
-framework.email.tolist = <%= node['rundeck']['mail']['recipients'].join(',') %>
+framework.email.tolist = <%= @recipients %>
 # email address appearing in message "from" field
 framework.email.from = <%= node['rundeck']['mail']['from'] %>
 # email address replies should go

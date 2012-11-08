@@ -9,7 +9,6 @@ default['rundeck']['rpm_url'] = 'http://repo.rundeck.org/latest.rpm'
 default['rundeck']['node_name'] = node.name
 
 default['rundeck']['mail'] = {
-	'recipients'	=> [ 'root' ],
 	'hostname'		=> 'localhost',
 	'port'     		=> 25,
 	'username' 		=> nil,
@@ -18,12 +17,16 @@ default['rundeck']['mail'] = {
 	'tls'      		=> false
 }
 
+default['rundeck']['mail']['recipients_data_bag'] = 'users'
+default['rundeck']['mail']['recipients_query'] = 'notify:true'
+default['rundeck']['mail']['recipients_field'] = 'email'
 
 default['rundeck']['admin']['data_bag'] = 'cookies'
 default['rundeck']['admin']['data_bag_id'] = 'rundeck'
 
 default['rundeck']['proxy']['enable'] = true
 default['rundeck']['proxy']['hostname'] = 'rundeck'
+default['rundeck']['proxy']['default'] = false
 
 default['rundeck']['ssh']['user'] = 'rundeck'
 default['rundeck']['ssh']['timeout'] = 30
