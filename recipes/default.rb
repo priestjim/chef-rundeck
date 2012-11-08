@@ -15,6 +15,7 @@ when 'debian'
 		mode '0644'
 		source node['rundeck']['deb_url']
 		checksum node['rundeck']['deb_checksum']
+		action :create_if_missing
 	end
 
 	dpkg_package "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['version']}.deb" do
@@ -45,6 +46,12 @@ when 'debian'
 		notifies :restart, "service[rundeckd]"
 	end
 	
+	rundeck_user adminobj['username'] do
+		password adminobj['password']
+		encryption 'md5'
+		roles %w{ user admin architect deploy build }
+	end
+
 	if node['rundeck']['proxy']['enable']
 
 		include_recipe 'nginx'
@@ -70,7 +77,6 @@ when 'debian'
 		mode 00644
 	end
 	
-
 	service 'rundeckd' do
 		provider Chef::Provider::Service::Upstart if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
 		supports :status => true, :restart => true
