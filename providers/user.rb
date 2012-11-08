@@ -18,8 +18,12 @@ action :create do
 		::File.open(::File.join('etc','rundeck','realm.properties'), 'a') do |fp|
 			fp.puts(create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles))
 		end
-
 		Chef::Log.info("Rundeck user #{new_resource.name} created")		
+		ruby_block "notify-rundeckd-restart" do
+			block do
+				notifies :restart, "service[rundeckd]"		
+			end
+		end
 	end
 
 end
@@ -41,8 +45,12 @@ action :remove do
 		::File.open(::File.join('etc','rundeck','realm.properties'), 'w') do |fp|
 			fp.puts(newcontent)
 		end
-
-		Chef::Log.info("Rundeck user #{new_resource.name} removed")		
+		Chef::Log.info("Rundeck user #{new_resource.name} removed")
+		ruby_block "notify-rundeckd-restart" do
+			block do
+				notifies :restart, "service[rundeckd]"		
+			end
+		end
 	end
 
 end
@@ -65,8 +73,12 @@ action :update do
 		::File.open(::File.join('etc','rundeck','realm.properties'), 'w') do |fp|
 			fp.puts(newcontent)
 		end	
-
-		Chef::Log.info("Rundeck user #{new_resource.name} updated")		
+		Chef::Log.info("Rundeck user #{new_resource.name} updated")
+		ruby_block "notify-rundeckd-restart" do
+			block do
+				notifies :restart, "service[rundeckd]"		
+			end
+		end
 	end
 	
 end
