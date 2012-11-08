@@ -62,6 +62,14 @@ when 'debian'
 
 	end
 
+	cookbook_file '/etc/logrotate.d/rundeck' do
+		source 'rundeck.logrotate'
+		owner 'root'
+		group 'root'
+		mode 00644
+	end
+	
+
 	service 'rundeckd' do
 		provider Chef::Provider::Service::Upstart if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
 		supports :status => true, :restart => true
