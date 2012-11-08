@@ -42,6 +42,7 @@ when 'debian'
 			:admin_pass => adminobj['password'],
 			:recipients => recipients
 		})
+		notifies :restart, "service[rundeckd]"
 	end
 	
 	if node['rundeck']['proxy']['enable']

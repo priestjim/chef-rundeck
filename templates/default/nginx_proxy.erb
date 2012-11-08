@@ -7,8 +7,8 @@ server {
     charset                         utf-8;
     root                            <%= node['nginx']['share_dir'] %>/html;
 
-    access_log                  off;
-    error_log                   <%= node['nginx']['log_dir'] %>/rundeck.error.log;
+    access_log                      off;
+    error_log                       <%= node['nginx']['log_dir'] %>/rundeck.error.log;
 
     proxy_redirect off;
 
