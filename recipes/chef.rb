@@ -2,31 +2,62 @@
 # Cookbook Name:: chef-rundeck
 # Recipe:: chef
 #
-# Requires the rvm cookbook from github.com/priestjim
-#
 # Copyright 2012, Panagiotis Papadomitsos <pj@ezgr.net>
 #
 
-include_recipe 'rvm'
+include_recipe 'supervisor'
 
-rvm_user_altinstall 'rundeck' do
-	user 'rundeck'
-	group 'rundeck'
-	home '/var/lib/rundeck'
-	version '1.9.3'
+adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
+
+if adminobj['client_key'].nil? || adminobj['client_key'].empty?
+	Chef::Log.info("Could not locate a valid PEM key for chef-rundeck. Please define one!")
+	return true
 end
 
-node['rundeck']['chef']['gems'].each do |gem|
-	rvm_gem gem do
-		action :upgrade
-		user 'rundeck'
-	end
-end
+# Install the chef-rundeck gem on the Chef omnibus package. Useful workaround instead of installing RVM, a system Ruby etc
+# and it offers minimal system pollution
+chef_gem 'chef-rundeck'
 
-# Update the default rundeck profile to include the RVM path
-cookbook_file "/etc/rundeck/profile" do
-	source "profile"
+# Create the knife.rb for chef-rundck to read
+directory "/var/lib/rundeck/.chef" do
 	owner 'rundeck'
 	group 'rundeck'
-	mode 00640
+	mode 00755
+	action :create
+end
+
+template "/var/lib/rundeck/.chef/knife.rb" do
+	source "knife.rb.erb"
+	owner 'rundeck'
+	group 'rundeck'
+	mode 00644
+	variables({
+		:user => node['rundeck']['chef']['user'],
+		:chef_server_url => Chef::Config['chef_server_url']
+	})
+end
+
+file "/var/lib/rundeck/.chef/#{node['rundeck']['chef']['user']}.pem" do
+	action :create
+	owner 'rundeck'
+	group 'rundeck'
+	mode 00644
+end
+
+# Create a Supervisor service that runs chef-rundeck
+supervisor_service "chef-rundeck" do
+	command "/opt/chef/embedded/bin/chef-rundeck -c /var/lib/rundeck/.chef/knife.rb -u #{node['rundeck']['chef']['user']} -w #{Chef::Config['chef_server_url']} -p #{node['rundeck']['chef']['port']}"
+	numprocs 1
+	directory "/var/lib/rundeck"
+	autostart true
+	autorestart :unexpected
+	startsecs 15
+	stopwaitsecs 15
+	stdout_logfile '/var/log/rundeck/chef-rundeck.log'
+	stdout_logfile_maxbytes "10MB"
+	stdout_logfile_backups 7	
+	stopsignal :TERM
+	user 'rundeck'
+	redirect_stderr true
+	action :enable
 end
