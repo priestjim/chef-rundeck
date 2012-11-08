@@ -12,7 +12,7 @@ action :create do
 	# Check user existense in realm.properties
 	if ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_resource.name}:/)
 		new_resource.updated_by_last_action(false)
-		Chef::Log.info("User #{new_resource.name} already exists. Please use :update action instead")
+		Chef::Log.info("Rundeck user #{new_resource.name} already exists. Please use :update action instead")
 		return true
 	end
 
@@ -21,6 +21,7 @@ action :create do
 		fp.puts(create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles))
 	end
 
+	Chef::Log.info("Rundeck user #{new_resource.name} created")
 end
 
 action :remove do
@@ -43,6 +44,8 @@ action :remove do
 		fp.puts(newcontent)
 	end
 
+	Chef::Log.info("Rundeck user #{new_resource.name} removed")
+
 end
 
 action :update do
@@ -52,6 +55,7 @@ action :update do
 
 	unless ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_auth_line}$/)
 		new_resource.updated_by_last_action(false)
+		Chef::Log.info("Rundeck user #{new_resource.name} already up to date")		
 		return true
 	end
 
@@ -64,6 +68,8 @@ action :update do
 	::File.open(::File.join('etc','rundeck','realm.properties'), 'w') do |fp|
 		fp.puts(newcontent)
 	end	
+
+	Chef::Log.info("Rundeck user #{new_resource.name} updated")
 
 end
 

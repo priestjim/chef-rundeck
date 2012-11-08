@@ -58,6 +58,7 @@ when 'debian'
 		password adminobj['password']
 		encryption 'md5'
 		roles %w{ user admin architect deploy build }
+		action :create
 	end
 
 	if node['rundeck']['proxy']['enable']
