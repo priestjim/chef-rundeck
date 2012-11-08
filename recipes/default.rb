@@ -45,6 +45,14 @@ when 'debian'
 		})
 		notifies :restart, "service[rundeckd]"
 	end
+
+	cookbook_file "/etc/rundeck/realm.properties" do
+		source 'realm.properties'
+		owner 'rundeck'
+		group 'rundeck'
+		mode 00644
+		action :create_if_missing
+	end
 	
 	rundeck_user adminobj['username'] do
 		password adminobj['password']
