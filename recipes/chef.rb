@@ -26,7 +26,7 @@ git "#{Chef::Config['file_cache_path']}/chef-rundeck-gem" do
 end
 
 chef_gem "chef-rundeck" do
-	source "#{Chef::Config['file_cache_path']}/chef-rundeck-gem/chef-rundeck-0.2.1.gem"
+	source "#{Chef::Config['file_cache_path']}/chef-rundeck-gem/chef-rundeck-0.2.2.gem"
 	action :nothing
 end
 
