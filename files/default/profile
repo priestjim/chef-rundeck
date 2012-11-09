@@ -32,7 +32,7 @@ export RDECK_JVM="-Djava.security.auth.login.config=/etc/rundeck/jaas-loginmodul
 #
 # JVM optimizations
 #
-RDECK_JVM="$RDECK_JVM -Xmx1024m -Xms256m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly"
+RDECK_JVM="$RDECK_JVM -Xmx1024m -Xms256m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+UseTLAB -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"
 
 #
 # SSL Configuration - Uncomment the following to enable.  Check SSL.properties for details.
