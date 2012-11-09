@@ -67,24 +67,6 @@ when 'debian'
 		action :create
 	end
 
-	if node['rundeck']['proxy']['enable']
-
-		include_recipe 'nginx'
-
-		template "#{node['nginx']['dir']}/sites-available/rundeck" do
-			source 'nginx_proxy.erb'
-			owner 'root'
-			group 'root'
-			mode 00644
-			if(::File.symlink?("#{node['nginx']['dir']}/sites-enabled/rundeck"))
-				notifies :reload, 'service[nginx]', :immediately
-			end
-		end
-
-		nginx_site 'rundeck'
-
-	end
-
 	cookbook_file '/etc/logrotate.d/rundeck' do
 		source 'rundeck.logrotate'
 		owner 'root'

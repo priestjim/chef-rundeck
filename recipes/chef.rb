@@ -16,9 +16,21 @@ end
 
 # Install the chef-rundeck gem on the Chef omnibus package. Useful workaround instead of installing RVM, a system Ruby etc
 # and it offers minimal system pollution
-chef_gem 'chef-rundeck'
+# Currently installing a better version than the original OpsCode one, pending a pull request
 
-# Create the knife.rb for chef-rundck to read
+git "#{Chef::Config['file_cache_path']}/chef-rundeck-gem" do
+	repository 'git://github.com/priestjim/chef-rundeck-gem.git'
+	reference "master"
+	action :sync
+	notifies :install, "chef_gem[chef-rundeck]"
+end
+
+chef_gem "chef-rundeck" do
+	source "#{Chef::Config['file_cache_path']}/chef-rundeck-gem/chef-rundeck-0.2.1.gem"
+	action :nothing
+end
+
+# Create the knife.rb for chef-rundeck to read
 directory "/var/lib/rundeck/.chef" do
 	owner 'rundeck'
 	group 'rundeck'
@@ -35,6 +47,7 @@ template "/var/lib/rundeck/.chef/knife.rb" do
 		:user => adminobj['client_name'],
 		:chef_server_url => Chef::Config['chef_server_url']
 	})
+	notifies :restart, "supervisor_service[chef-rundeck]"
 end
 
 file "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem" do
@@ -47,7 +60,7 @@ end
 
 # Create a Supervisor service that runs chef-rundeck
 supervisor_service "chef-rundeck" do
-	command "/opt/chef/embedded/bin/chef-rundeck -c /var/lib/rundeck/.chef/knife.rb -u #{node['rundeck']['ssh']['user']} -w #{Chef::Config['chef_server_url']} -p #{node['rundeck']['chef']['port']}"
+	command "/opt/chef/embedded/bin/chef-rundeck -c /var/lib/rundeck/.chef/knife.rb -l -u #{node['rundeck']['ssh']['user']} -w #{Chef::Config['chef_server_url'].sub(':4000',':4040')} -p #{node['rundeck']['chef']['port']} -s #{node['rundeck']['ssh']['port']}"
 	numprocs 1
 	directory "/var/lib/rundeck"
 	autostart true
