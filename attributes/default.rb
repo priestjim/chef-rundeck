@@ -28,7 +28,7 @@ default['rundeck']['proxy']['hostname'] = 'rundeck'
 default['rundeck']['proxy']['default'] = false
 
 default['rundeck']['ssh']['user'] = 'rundeck-ssh'
-default['rundeck']['ssh']['timeout'] = 30
+default['rundeck']['ssh']['timeout'] = 30000
 default['rundeck']['ssh']['port'] = 22
 
 default['rundeck']['chef']['port'] = 9998
