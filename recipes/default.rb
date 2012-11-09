@@ -52,6 +52,16 @@ when 'debian'
 		notifies :restart, "service[rundeckd]"
 	end
 
+	# Featuring Javascript optimizations
+	cookbook_file "/etc/rundeck/profile" do
+		source 'profile'
+		owner 'rundeck'
+		group 'rundeck'
+		mode 00644
+		action :create
+		notifies :restart, "service[rundeckd]"		
+	end
+
 	cookbook_file "/etc/rundeck/realm.properties" do
 		source 'realm.properties'
 		owner 'rundeck'
