@@ -52,7 +52,16 @@ when 'debian'
 		notifies :restart, "service[rundeckd]"
 	end
 
-	# Featuring Javascript optimizations
+	template '/etc/rundeck/project.properties' do
+		source 'project.properties.erb'
+		owner 'rundeck'
+		group 'rundeck'
+		mode 00644
+		variables({ :recipients => recipients })
+		notifies :restart, "service[rundeckd]"
+	end
+
+	# Featuring Java optimizations
 	cookbook_file "/etc/rundeck/profile" do
 		source 'profile'
 		owner 'rundeck'
