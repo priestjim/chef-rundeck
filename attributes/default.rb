@@ -1,7 +1,7 @@
 # Package
-default['rundeck']['version'] = '1.4.4-1'
-default['rundeck']['deb_url'] = "https://github.com/downloads/dtolabs/rundeck/rundeck-#{node['rundeck']['version']}.deb"
-default['rundeck']['deb_checksum'] = '16fb6f7995d42860976f9542c5e5a1bba8f3b9bfd515135056ff3181fcfc6ead'
+default['rundeck']['version'] = '1.4.5-1'
+default['rundeck']['deb_url'] = "http://download.rundeck.org/deb/rundeck-#{node['rundeck']['version']}.deb"
+default['rundeck']['deb_checksum'] = '658f0cf61f23e02cb9a6506ba6b637cc2d557bc40b4a3fc8b19bb143f5e0bea2'
 default['rundeck']['rpm_url'] = 'http://repo.rundeck.org/latest.rpm'
 
 # Framework configuration
