@@ -10,9 +10,15 @@ rdoc
 spec/reports
 test/tmp
 test/version_tmp
-tmp
-
-# YARD artifacts
+tmp/
 .yardoc
+*~
 _yardoc
 doc/
+Gemfile.lock
+berkshelf
+Berksfile.lock
+.rake_test_cache
+.vagrant
+.idea
+metadata.json

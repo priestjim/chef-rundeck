@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: chef-rundeck
-# Resource:: user
+# Cookbook Name:: rundeck
+# Attribute:: ssh
 #
 # Author:: Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
@@ -19,11 +19,6 @@
 # limitations under the License.
 #
 
-actions :create, :remove, :update
-
-default_action :create
-
-attribute :name,        :kind_of => String,                       :name_attribute => true
-attribute :password,    :kind_of => String,                       :required => true
-attribute :roles,       :kind_of => Array,                        :default => [ 'admin' ]
-attribute :encryption,  :equal_to => [ 'crypt', 'md5', 'plain' ], :default => 'md5'
+default['rundeck']['ssh']['user'] = 'rundeck-ssh'
+default['rundeck']['ssh']['timeout'] = 30000
+default['rundeck']['ssh']['port'] = 22

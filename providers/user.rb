@@ -2,7 +2,21 @@
 # Cookbook Name:: chef-rundeck
 # Provider:: user
 #
-# Copyright 2012, Panagiotis Papadomitsos <pj@ezgr.net>
+# Author:: Panagiotis Papadomitsos (<pj@ezgr.net>)
+#
+# Copyright 2013, Panagiotis Papadomitsos
+#
+# Licensed under the Apache License, Version 2.0 (the 'License');
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an 'AS IS' BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 
 action :create do
@@ -12,16 +26,16 @@ action :create do
 		new_resource.updated_by_last_action(false)
 		Chef::Log.info("Rundeck user #{new_resource.name} already exists. Please use :update action instead")
 	else
-		new_resource.updated_by_last_action(true)
-		# Append the line to realm.properties
-		::File.open(::File.join('etc','rundeck','realm.properties'), 'a') do |fp|
-			fp.puts(create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles))
-		end
-		Chef::Log.info("Rundeck user #{new_resource.name} created")		
-		ruby_block "notify-rundeckd-restart" do
+		ruby_block "rundeck-create-user-#{new_resource.name}" do
 			block do
-				notifies :restart, "service[rundeckd]"		
+				new_resource.updated_by_last_action(true)
+				# Append the line to realm.properties
+				::File.open(::File.join('etc','rundeck','realm.properties'), 'a') do |fp|
+					fp.puts(create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles))
+				end
+				Chef::Log.info("Rundeck user #{new_resource.name} created")
 			end
+			notifies :restart, 'service[rundeckd]'
 		end
 	end
 
@@ -33,21 +47,19 @@ action :remove do
 	unless ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_resource.name}: /)
 		new_resource.updated_by_last_action(false)
 	else
-		new_resource.updated_by_last_action(true)
-		fp = ::File.open(::File.join('etc','rundeck','realm.properties'), 'r')
-		newcontent = String.new
-		while line = fp.readline
-			newcontent << line unless fp.gets.match(/^#{new_resource.name}: /)
-		end
-		fp.close
-		::File.open(::File.join('etc','rundeck','realm.properties'), 'w') do |fp|
-			fp.puts(newcontent)
-		end
-		Chef::Log.info("Rundeck user #{new_resource.name} removed")
-		ruby_block "notify-rundeckd-restart" do
+		ruby_block "rundeck-remove-user-#{new_resource.name}" do
 			block do
-				notifies :restart, "service[rundeckd]"		
+				new_resource.updated_by_last_action(true)
+				::File.open(::File.join('etc','rundeck','realm.properties'), 'r') do |fp|
+					newcontent = String.new
+					while line = fp.readline do
+						newcontent << line unless fp.gets.match(/^#{new_resource.name}: /)
+					end
+				end
+				::File.write(::File.join('etc','rundeck','realm.properties'), newcontent)
+				Chef::Log.info("Rundeck user #{new_resource.name} removed")
 			end
+			notifies :restart, 'service[rundeckd]'
 		end
 	end
 
@@ -61,21 +73,19 @@ action :update do
 		new_resource.updated_by_last_action(false)
 		Chef::Log.info("Rundeck user #{new_resource.name} already up to date")		
 	else
-		new_resource.updated_by_last_action(true)
-		fp = ::File.open(::File.join('etc','rundeck','realm.properties'), 'r')
-		newcontent = String.new
-		while line = fp.readline
-			newcontent << fp.gets.match(/^#{new_resource.name}: /) ? new_auth_line : line
-		end
-		fp.close
-		::File.open(::File.join('etc','rundeck','realm.properties'), 'w') do |fp|
-			fp.puts(newcontent)
-		end	
-		Chef::Log.info("Rundeck user #{new_resource.name} updated")
-		ruby_block "notify-rundeckd-restart" do
+		ruby_block "rundeck-update-user-#{new_resource.name}" do
 			block do
-				notifies :restart, "service[rundeckd]"		
+				new_resource.updated_by_last_action(true)
+				::File.open(::File.join('etc','rundeck','realm.properties'), 'r') do |fp|
+					newcontent = String.new
+					while line = fp.readline do
+						newcontent << fp.gets.match(/^#{new_resource.name}: /) ? new_auth_line : line
+					end
+				end
+				::File.write(::File.join('etc','rundeck','realm.properties'), newcontent)
+				Chef::Log.info("Rundeck user #{new_resource.name} updated")
 			end
+			notifies :restart, 'service[rundeckd]'
 		end
 	end
 	
@@ -91,6 +101,5 @@ def create_auth_line(username, password, encryption, roles)
 	when 'plain'
 		pass = password
 	end
-
-	return "#{username}: #{pass},#{roles.join(',')}"
+	"#{username}: #{pass},#{roles.join(',')}"
 end

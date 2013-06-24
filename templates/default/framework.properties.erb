@@ -9,8 +9,8 @@
 
 # TODO - DUMP java.home = /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 file.separator = /
-rdeck.base = /etc/rundeck
-rdeck.home = /etc/rundeck
+rdeck.base = /var/lib/rundeck
+rdeck.home = /var/lib/rundeck
 # TODO - DUMP user.home = /home/rundeck
 
 framework.application.libpath =
@@ -59,10 +59,10 @@ framework.crypto.jarSigning.aliasName =
 
 
 
-#the hostname of this rdeck node (likely matches hostname)
-framework.node.hostname = localhost
+# the hostname of this rdeck node (likely matches hostname)
+framework.node.hostname = <%= node['fqdn'] %>
 
-#the logical name of this rdeck node (used during Node registration)
+# the logical name of this rdeck node (used during Node registration)
 framework.node.name = <%= node['rundeck']['node_name'] %>
 
 # for backwards compatability
@@ -85,7 +85,7 @@ framework.rdeck.dir = ${rdeck.home}
 #
 # Root directory of the framework instance
 #
-framework.rdeck.base = /etc/rundeck
+framework.rdeck.base = /var/lib/rundeck
 
 #
 # Base directory of the installed functional modules
@@ -162,13 +162,13 @@ framework.server.username = <%= @admin_user %>
 framework.server.password = <%= @admin_pass %>
 framework.server.hostname = localhost
 framework.server.name = localhost
-framework.server.port = 4440
-framework.server.url = http://localhost:4440
+framework.server.port = <%= node['rundeck']['port'] %>
+framework.server.url = http://localhost:<%= node['rundeck']['port'] %>
 
 #
 # URL to Rundeck
 #
-framework.rundeck.url = http://localhost:4440
+framework.rundeck.url = http://localhost:<%= node['rundeck']['port'] %>
 
 #
 # ssh keypath
