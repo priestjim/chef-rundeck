@@ -7,6 +7,8 @@ This file is used to list changes made in each version of chef-rundeck.
 * Version bump to Rundeck
 * Added support for encrypted data bags
 * Doc updates
+* Added support for RHEL distros
+* Various bugfixes
 
 ## 0.1.0:
 
