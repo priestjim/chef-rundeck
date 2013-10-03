@@ -96,6 +96,8 @@ else
 	recipients = 'root'
 end
 
+user 'rundeck'
+
 # Configuration properties
 template '/etc/rundeck/framework.properties' do
 	source 'framework.properties.erb'
