@@ -98,7 +98,7 @@ end
 
 directory '/etc/rundeck' do
 	action :create
-	not_if do ::Directory.exists?('/etc/rundeck') end
+	not_if do ::File.directory?('/etc/rundeck') end
 end
 
 # Configuration properties
