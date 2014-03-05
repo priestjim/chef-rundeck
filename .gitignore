@@ -22,3 +22,5 @@ Berksfile.lock
 .vagrant
 .idea
 metadata.json
+.kitchen/
+.kitchen.local.yml
