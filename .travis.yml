@@ -1,0 +1,6 @@
+language: ruby
+
+bundler_args: --path=~/.bundle
+
+script:
+  - bundle exec kitchen test

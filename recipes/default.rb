@@ -96,6 +96,11 @@ else
 	recipients = 'root'
 end
 
+directory '/etc/rundeck' do
+	action :create
+	not_if do ::File.directory?('/etc/rundeck') end
+end
+
 # Configuration properties
 template '/etc/rundeck/framework.properties' do
 	source 'framework.properties.erb'
