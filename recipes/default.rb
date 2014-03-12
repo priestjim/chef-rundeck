@@ -38,7 +38,8 @@ when 'debian'
 
 	dpkg_package "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb" do
 		action :nothing
-		notifies :delete, 'file[/etc/rundeck/realm.properties]'
+		options '--force-confdef --force-confask'
+		notifies :delete, 'file[/etc/rundeck/realm.properties]', :immediately
 	end
 
 when 'rhel'
@@ -96,9 +97,15 @@ else
 	recipients = 'root'
 end
 
+# Resource instance declaration needed to instantiate the
+# 'rundeck' user before the package is actually installed. See PR #2
+user 'rundeck' do
+	action :nothing
+end
+
 directory '/etc/rundeck' do
 	action :create
-	not_if do ::File.directory?('/etc/rundeck') end
+	not_if { ::File.directory?('/etc/rundeck') }
 end
 
 # Configuration properties
@@ -139,7 +146,7 @@ template '/etc/rundeck/profile' do
 	group 'rundeck'
 	mode 00644
 	action :create
-	notifies :restart, 'service[rundeckd]'		
+	notifies :restart, 'service[rundeckd]'
 end
 
 # Stub files from the cookbook, override with chef-rewind
