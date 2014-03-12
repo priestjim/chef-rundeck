@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of chef-rundeck.
 
+## 0.2.1
+
+* Version bump to Rundeck
+* Fixed stub user creation issue
+
 ## 0.2.0:
 
 * Version bump to Rundeck
