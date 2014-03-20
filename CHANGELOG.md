@@ -6,6 +6,8 @@ This file is used to list changes made in each version of chef-rundeck.
 
 * Version bump to Rundeck
 * Fixed stub user creation issue
+* Added update action along with create action on admin user (resolves #6)
+* Added apt/yum recipe inclusion (resolves #7)
 
 ## 0.2.0:
 

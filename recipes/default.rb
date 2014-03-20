@@ -26,6 +26,8 @@ case node['platform_family']
 
 when 'debian'
 
+	include_recipe 'apt'
+
 	remote_file "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb" do
 		owner 'root'
 		group 'root'
@@ -33,7 +35,7 @@ when 'debian'
 		source node['rundeck']['deb_url']
 		checksum node['rundeck']['deb_checksum']
 		action :create
-		notifies :install, "dpkg_package[#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb]"
+		notifies :install, "dpkg_package[#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb]", :immediately
 	end
 
 	dpkg_package "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb" do
@@ -43,6 +45,8 @@ when 'debian'
 	end
 
 when 'rhel'
+
+	include_recipe 'yum'
 
 	package 'java' # Needed for RPM dependency
 
@@ -172,7 +176,7 @@ rundeck_user adminobj['username'] do
 	password adminobj['password']
 	encryption 'md5'
 	roles %w{ user admin architect deploy build }
-	action :create
+	action [:create, :update]
 end
 
 # Log rotation
