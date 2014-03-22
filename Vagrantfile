@@ -18,12 +18,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-  
+
 Vagrant.configure('2') do |config|
 
   config.berkshelf.enabled = true
-  config.ssh.max_tries = 40
-  config.ssh.timeout   = 120
 
   config.vm.provider :virtualbox do |v|
     v.gui = true
@@ -34,8 +32,8 @@ Vagrant.configure('2') do |config|
   config.vm.network :private_network, ip: '172.16.6.2'
   config.vm.provision :chef_solo do |chef|
     chef.arguments = '-Fdoc'
-    chef.json = { 
-      'java' => { 
+    chef.json = {
+      'java' => {
         'oracle' => {
           'accept_oracle_download_terms' => true
         },
@@ -44,7 +42,8 @@ Vagrant.configure('2') do |config|
       }
     }
     chef.run_list = [
-      'recipe[nginx]',
+      'recipe[apt]',
+      'recipe[openresty]',
       'recipe[python]',
       'recipe[supervisor]',
       'recipe[logrotate]',
