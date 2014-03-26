@@ -93,12 +93,19 @@ else
 	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
 end
 
-unless Chef::Config[:solo]
+if Chef::Config[:solo]
+	recipients = 'root'
+elsif node['rundeck']['partial_search']
+	recipients = partial_search(
+    node['rundeck']['mail']['recipients_data_bag'],
+    node['rundeck']['mail']['recipients_query'],
+		:keys => node['rundeck']['mail']['recipients_keys']
+	).map {|u| u[node['rundeck']['mail']['recipients_keys'].keys.first] }.
+	join(',') rescue []
+else
 	recipients = search(node['rundeck']['mail']['recipients_data_bag'], node['rundeck']['mail']['recipients_query']).
 	map {|u| eval("u#{node['rundeck']['mail']['recipients_field']}") }.
 	join(',') rescue []
-else
-	recipients = 'root'
 end
 
 # Resource instance declaration needed to instantiate the
@@ -164,7 +171,7 @@ end
 	end
 end
 
-cookbook_file "/etc/rundeck/realm.properties" do
+cookbook_file '/etc/rundeck/realm.properties' do
 	source 'realm.properties'
 	owner 'rundeck'
 	group 'rundeck'

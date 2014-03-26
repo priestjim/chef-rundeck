@@ -31,11 +31,12 @@ default['rundeck']['rpm_checksum']      = '6192f035e80731cf8efc39f30479601a73f76
 default['rundeck']['rpm_cfg_checksum']  = 'c5bb61f5b5464b37c578a44ea86e168ea23cb73be6de7a5ee7cf5c895fae9c5a'
 
 # Framework configuration
-default['rundeck']['node_name']     = node.name
-default['rundeck']['port']          = 4440
-default['rundeck']['log4j_port']    = 4435
-default['rundeck']['public_rss']    = false
-default['rundeck']['logging_level'] = 'INFO'
+default['rundeck']['node_name']      = node.name
+default['rundeck']['port']           = 4440
+default['rundeck']['log4j_port']     = 4435
+default['rundeck']['public_rss']     = false
+default['rundeck']['logging_level']  = 'INFO'
+default['rundeck']['partial_search'] = true
 
 # Administrator data bag
 default['rundeck']['admin']['encrypted_data_bag'] = true
@@ -58,4 +59,5 @@ default['rundeck']['mail']          = {
 }
 default['rundeck']['mail']['recipients_data_bag'] = 'users'
 default['rundeck']['mail']['recipients_query']    = 'notify:true'
+default['rundeck']['mail']['recipients_keys']     = { 'email' => ['email'] }
 default['rundeck']['mail']['recipients_field']    = "['email']"

@@ -12,6 +12,7 @@ depends           'yum'
 depends           'apt'
 depends           'java'
 depends           'logrotate'
+depends           'partial_search'
 
 recommends        'supervisor'
 recommends        'nginx'
