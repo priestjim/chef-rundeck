@@ -8,6 +8,8 @@ This file is used to list changes made in each version of chef-rundeck.
 * Fixed stub user creation issue
 * Added update action along with create action on admin user (resolves #6)
 * Added apt/yum recipe inclusion (resolves #7)
+* Fixed outdated jaas module declaration (resolves #8)
+* Added partial search support
 
 ## 0.2.0:
 

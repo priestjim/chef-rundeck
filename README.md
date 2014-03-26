@@ -30,7 +30,7 @@ In order to install the NGINX proxy site, you'll either need the `openresty` or
 Platform
 --------
 
-The following platforms are supported and tested using Vagrant 1.2: 
+The following platforms are supported and tested using Vagrant 1.2:
 
 * Ubuntu 12.04
 * CentOS 6.4
@@ -66,27 +66,33 @@ Attributes are split in files semantically:
 * `node['rundeck']['admin']['encrypted_data_bag']` - Enables loading the Rundeck administrator
   credentials using Chef encrypted data bags instead of simple ones.
 
-* `node['rundeck']['admin']['data_bag']` - The data bag name for the administrator credentials
+* `node['rundeck']['admin']['data_bag']` - The data bag name for the administrator credentials.
 
-* `node['rundeck']['admin']['data_bag_id']` - The data bag item name for the administrator credentials
+* `node['rundeck']['admin']['data_bag_id']` - The data bag item name for the administrator credentials.
 
 * `node['rundeck']['admin']['username']` - Hardcoded administrator username in case data bags are not
-  available (i.e. chef-solo runs)
+  available (i.e. chef-solo runs).
 
 * `node['rundeck']['admin']['password']` - Hardcoded administrator password in case data bags are not
-  available (i.e. chef-solo runs)
+  available (i.e. chef-solo runs).
 
 * `node['rundeck']['admin']['ssh_key']` - Hardcoded administrator private SSH key in case data bags are not
-  available (i.e. chef-solo runs)
+  available (i.e. chef-solo runs).
+
+* `node['rundeck']['partial_search']` - Enables partial search support for mail credentials.
+
 
 * `node['rundeck']['mail']` - Hash with various SMTP parameters used by Rundeck for notifications.
 
 * `node['rundeck']['mail']['recipients_data_bag']` - The name of the data bag to be searched for recipients
   of mails for administrative purposes.
 
+* `node['rundeck']['mail']['recipients_keys']` - A partial search compatible hash with the fields and the field paths
+to run the partial_search for.
+
 * `node['rundeck']['mail']['recipients_query']` - A standard Chef query to use for searching for administrative
   contacts.
-  
+
 * `node['rundeck']['mail']['recipients_field']` - Field to use for the administrative e-mail. Must be in standard hash
   notation and will be eval'ed (i.e. "['email']")
 
@@ -108,7 +114,7 @@ Attributes are split in files semantically:
 
 ## java.rb
 
-* `node['rundeck']['java']['enable_jmx']` - Defines a set of flags in order to enable JMX monitoring on the 
+* `node['rundeck']['java']['enable_jmx']` - Defines a set of flags in order to enable JMX monitoring on the
   Rundeck installation
 
 * `node['rundeck']['java']['allocated_memory']` - Defines the maximum heap memory available to Rundeck's JVM
@@ -117,7 +123,7 @@ Attributes are split in files semantically:
 
 ## proxy.rb
 
-* `node['rundeck']['proxy']['hostname']` - Defines the default hostname used in the NGINX proxy instance. 
+* `node['rundeck']['proxy']['hostname']` - Defines the default hostname used in the NGINX proxy instance.
 
 * `node['rundeck']['proxy']['default']` - Set to true to enable the NGINX default server flags for the Rundeck
   proxy virtual host.
@@ -168,7 +174,7 @@ Data bag format
 The Rundeck cookbook requires some data to be available in data bags. Depending on the value of
 `node['rundeck']['admin']['encrypted_data_bag']`, the data bag data will be loaded via encrypted data bag
 methods or plain. You can select the data bag name and ID via the `node['rundeck']['admin']['data_bag']`
-and `node['rundeck']['admin']['data_bag_id']` attributes. The following attributes must be present in the 
+and `node['rundeck']['admin']['data_bag_id']` attributes. The following attributes must be present in the
 selected data bag:
 
 * `username`: Used as the default administrator's username created during the initial installation of Rundeck.
@@ -181,9 +187,9 @@ If you are using the `rundeck::chef` recipe, the following must be present in th
 * `client_name`: The Chef client's name.
 
 In addition to administrative attributes, data bags are used in mail recipient search. The search query searches among the
-`node['rundeck']['mail']['recipients_data_bag']` data bag using a standard Chef query defined in 
-`node['rundeck']['mail']['recipients_query']` and from the results retrieves the field 
-defined in `node['rundeck']['mail']['recipients_field']` using standard Ruby eval. 
+`node['rundeck']['mail']['recipients_data_bag']` data bag using a standard Chef query defined in
+`node['rundeck']['mail']['recipients_query']` and from the results retrieves the field
+defined in `node['rundeck']['mail']['recipients_field']` using standard Ruby eval.
 So, if you are looking for the `user['notifications']['email']` field in your data bags
 for your mail recipients, you should define it as:
 
