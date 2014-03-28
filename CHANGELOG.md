@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of chef-rundeck.
 
+## 0.3.0
+
+* Logic change on admin data bag and Chef credentials fetching
+* Moved chef-rundeck gem to the official one
+* Implemented plugin LWRP
+* Fixed double startup issue with Upstart supporting systems
+
 ## 0.2.1
 
 * Version bump to Rundeck

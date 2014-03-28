@@ -81,7 +81,6 @@ Attributes are split in files semantically:
 
 * `node['rundeck']['partial_search']` - Enables partial search support for mail credentials.
 
-
 * `node['rundeck']['mail']` - Hash with various SMTP parameters used by Rundeck for notifications.
 
 * `node['rundeck']['mail']['recipients_data_bag']` - The name of the data bag to be searched for recipients
@@ -103,6 +102,8 @@ to run the partial_search for.
 * `node['rundeck']['chef']['client_key']` - Hardcoded Chef client key in case data bags are not available
 
 * `node['rundeck']['chef']['port']` - Hardcoded Chef client name in case data bags are not available
+
+* `node['rundeck']['chef']['partial_search']` - Enable partial search support on the chef-rundeck gem
 
 ## ssh.rb
 
@@ -200,7 +201,7 @@ LWRP
 
 ## user
 
-The cookbook includes the `rundeck_user` LWRP. The LWRP can be used to create users
+This cookbook defines the `rundeck_user` LWRP. The LWRP can be used to create users
 in Rundeck (see http://rundeck.org/docs/administration/authentication.html#realm.properties) through the standard
 `realm.properties` file. Only MD5 and CRYPT encryption is supported as an encryption scheme, along with plain-text.
 
@@ -217,7 +218,7 @@ The following attributes are used in the LWRP:
 * `roles` - The Rundeck roles that this user is a member of.
 * `encryption` - One of `crypt`, `md5`, `plain`.
 
-The LWRP can be used like
+Usage sample:
 
     rundeck_user 'ops' do
       password '123abc'
@@ -226,12 +227,37 @@ The LWRP can be used like
       action :create
     end
 
+## plugin
+
+This cookbook defines the `rundeck_plugin` LWRP. The LWRP can be used to install plugins in Rundeck
+(see http://rundeck.org/docs/plugins-user-guide/index.html). Plugin installation is fairly straight-forward as
+plugins can be installed/uninstalled just by moving/removing the plugin file
+from the `libext` directory in Rundeck's home.
+
+The following actions are supported:
+
+* `create` - Installs a Rundeck plugin.
+* `remove` - Removes a Rundeck plugin.
+
+The following attributes are used in the LWRP:
+
+* `name` - The plugin name. Plugin must end in `.jar` or `.zip` to be considered valid.
+* `url` - The URL to fetch the plugin from.
+* `checksum` - SHA-256 checksum of the plugin. Used in the same way as the `remote_file` resource.
+
+Usage sample:
+
+    rundeck_plugin 'rundeck-hipchat-plugin-1.0.0.jar' do
+      checksum 'd7fea03867011aa18ba5a5184aa1fb30befc59b8fbea5a76d88299abe05aec28'
+      url 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
+    end
+
 Usage
 =====
 
 Include the recipe on your node or role. Modify the
 attributes as required in a role cookbook to change how various
-configuration is applied per the attributes section above.
+configuration variables are applied per the attributes section above.
 
 If you need to alter the location of various cookbook_file
 directives, use `chef_rewind`.

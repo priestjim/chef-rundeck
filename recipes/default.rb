@@ -38,9 +38,10 @@ when 'debian'
 		notifies :install, "dpkg_package[#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb]", :immediately
 	end
 
+	# Added --force-depends since Rundeck hard-depends on Java 6 but will run on Java 7 well enough
 	dpkg_package "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb" do
 		action :nothing
-		options '--force-confdef --force-confask'
+		options '--force-confdef --force-confask --force-depends'
 		notifies :delete, 'file[/etc/rundeck/realm.properties]', :immediately
 	end
 
@@ -81,32 +82,26 @@ file '/etc/rundeck/realm.properties' do
 	action :nothing
 end
 
-if Chef::Config[:solo]
-	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id']) rescue {
-		'username' => node['rundeck']['admin']['username'],
-		'password' => node['rundeck']['admin']['password'],
-		'ssh_key'  => node['rundeck']['admin']['ssh_key']
-	}
-elsif node['rundeck']['admin']['encrypted_data_bag']
-	adminobj = Chef::EncryptedDataBagItem.load(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
-else
-	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
-end
+adminobj = if node['rundeck']['admin']['encrypted_data_bag']
+		Chef::EncryptedDataBagItem.load(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
+	else
+		data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
+	end rescue { 'username' => node['rundeck']['admin']['username'], 'password' => node['rundeck']['admin']['password'], 'ssh_key'  => node['rundeck']['admin']['ssh_key'] }
 
-if Chef::Config[:solo]
-	recipients = 'root'
-elsif node['rundeck']['partial_search']
-	recipients = partial_search(
-    node['rundeck']['mail']['recipients_data_bag'],
-    node['rundeck']['mail']['recipients_query'],
-		:keys => node['rundeck']['mail']['recipients_keys']
-	).map {|u| u[node['rundeck']['mail']['recipients_keys'].keys.first] }.
-	join(',') rescue []
-else
-	recipients = search(node['rundeck']['mail']['recipients_data_bag'], node['rundeck']['mail']['recipients_query']).
-	map {|u| eval("u#{node['rundeck']['mail']['recipients_field']}") }.
-	join(',') rescue []
-end
+recipients = if Chef::Config[:solo]
+		'root'
+	elsif node['rundeck']['partial_search']
+		partial_search(
+	    node['rundeck']['mail']['recipients_data_bag'],
+	    node['rundeck']['mail']['recipients_query'],
+			:keys => node['rundeck']['mail']['recipients_keys']
+		).map {|u| u[node['rundeck']['mail']['recipients_keys'].keys.first] }.
+		join(',')
+	else
+		search(node['rundeck']['mail']['recipients_data_bag'], node['rundeck']['mail']['recipients_query']).
+		map {|u| eval("u#{node['rundeck']['mail']['recipients_field']}") }.
+		join(',')
+	end
 
 # Resource instance declaration needed to instantiate the
 # 'rundeck' user before the package is actually installed. See PR #2
@@ -217,8 +212,21 @@ unless adminobj['ssh_key'].nil? || adminobj['ssh_key'].empty?
 
 end
 
+if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
+	service 'rundeck-init' do
+		service_name 'rundeckd'
+		provider Chef::Provider::Service::Init::Debian
+		action :disable
+	end
+end
+
 service 'rundeckd' do
 	provider(Chef::Provider::Service::Upstart) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
 	supports :status => true, :restart => true
 	action [ :enable, :start ]
+end
+
+rundeck_plugin 'rundeck-hipchat-plugin-1.0.0.jar' do
+	checksum 'd7fea03867011aa18ba5a5184aa1fb30befc59b8fbea5a76d88299abe05aec28'
+	url 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
 end

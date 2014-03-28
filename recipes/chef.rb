@@ -21,16 +21,11 @@
 
 include_recipe 'supervisor'
 
-if Chef::Config[:solo]
-	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id']) rescue {
-		'client_key' => node['rundeck']['chef']['client_key'],
-		'client_name' => node['rundeck']['chef']['client_name']
-	}
-elsif node['rundeck']['admin']['encrypted_data_bag']
-	adminobj = Chef::EncryptedDataBagItem.load(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
-else
-	adminobj = data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
-end
+adminobj = if node['rundeck']['admin']['encrypted_data_bag']
+		Chef::EncryptedDataBagItem.load(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
+	else
+		data_bag_item(node['rundeck']['admin']['data_bag'], node['rundeck']['admin']['data_bag_id'])
+	end rescue {'client_key' => node['rundeck']['chef']['client_key'], 'client_name' => node['rundeck']['chef']['client_name']	}
 
 if adminobj['client_key'].nil? || adminobj['client_key'].empty? || adminobj['client_name'].nil? || adminobj['client_name'].empty?
 	Chef::Log.info('Could not locate a valid client/PEM key pair for chef-rundeck. Please define one!')
@@ -39,19 +34,8 @@ end
 
 # Install the chef-rundeck gem on the Chef omnibus package. Useful workaround instead of installing RVM, a system Ruby etc
 # and it offers minimal system pollution
-# Currently installing a better version than the original Opscode one, pending a pull request
 
-git "#{Chef::Config['file_cache_path']}/chef-rundeck-gem" do
-	repository 'git://github.com/priestjim/chef-rundeck-gem.git'
-	reference 'master'
-	action :sync
-	notifies :install, 'chef_gem[chef-rundeck]'
-end
-
-chef_gem 'chef-rundeck' do
-	source "#{Chef::Config['file_cache_path']}/chef-rundeck-gem/chef-rundeck-0.2.2.gem"
-	action :nothing
-end
+chef_gem 'chef-rundeck'
 
 # Create the knife.rb for chef-rundeck to read
 directory '/var/lib/rundeck/.chef' do
@@ -81,9 +65,20 @@ file "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem" do
 	content adminobj['client_key']
 end
 
+chef_rundeck_args = [
+	'-a', Chef::Config['chef_server_url'],
+	'-k', "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem",
+	'-c', '/var/lib/rundeck/.chef/knife.rb',
+	'-u ', node['rundeck']['ssh']['user'],
+	'-w', Chef::Config['chef_server_url'],
+	'-p', node['rundeck']['chef']['port']
+]
+
+chef_rundeck_args << '--partial-search true' if node['rundeck']['chef']['partial_search']
+
 # Create a Supervisor service that runs chef-rundeck
 supervisor_service 'chef-rundeck' do
-	command "/opt/chef/embedded/bin/chef-rundeck -c /var/lib/rundeck/.chef/knife.rb -l -u #{node['rundeck']['ssh']['user']} -w #{Chef::Config['chef_server_url'].sub(':4000',':4040')} -p #{node['rundeck']['chef']['port']} -s #{node['rundeck']['ssh']['port']}"
+	command "/opt/chef/embedded/bin/chef-rundeck #{chef_rundeck_args.join(' ')}"
 	numprocs 1
 	directory '/var/lib/rundeck'
 	autostart true

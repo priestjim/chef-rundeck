@@ -22,18 +22,23 @@
 Vagrant.configure('2') do |config|
 
   config.berkshelf.enabled = true
+  config.vbguest.no_install = true
 
   config.vm.provider :virtualbox do |v|
+    v.memory = 1024
     v.gui = true
   end
 
   config.vm.box = 'ubuntu'
   config.vm.hostname = 'rundeck'
   config.vm.network :private_network, ip: '172.16.6.2'
+  config.vm.network :forwarded_port, guest: 4440, host: 4440
+
   config.vm.provision :chef_solo do |chef|
     chef.arguments = '-Fdoc'
     chef.json = {
       'java' => {
+        'install_flavor' => 'oracle',
         'oracle' => {
           'accept_oracle_download_terms' => true
         },
