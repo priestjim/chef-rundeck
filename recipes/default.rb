@@ -225,8 +225,3 @@ service 'rundeckd' do
 	supports :status => true, :restart => true
 	action [ :enable, :start ]
 end
-
-rundeck_plugin 'rundeck-hipchat-plugin-1.0.0.jar' do
-	checksum 'd7fea03867011aa18ba5a5184aa1fb30befc59b8fbea5a76d88299abe05aec28'
-	url 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
-end
