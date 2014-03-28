@@ -37,25 +37,25 @@ framework.email.ssl = <%= node['rundeck']['mail']['tls'] %>
 framework.email.failonerror = true
 
 # ----------------------------------------------------------------
-# Do not make changes below this line 
+# Do not make changes below this line
 # ----------------------------------------------------------------
 
 
 #
 # framework.crypto.keystore.filename is the path to the JKS keystore containing a certchain for
 # verifying signed jars
-# 
-framework.crypto.keystore.filename = 
+#
+framework.crypto.keystore.filename =
 
 #
 # framework.crypto.keystore.password is any password for verifying the keystore integrity
 #
-framework.crypto.keystore.password = 
+framework.crypto.keystore.password =
 
 #
 # framework.crypto.jarSigning.aliasName  is the name of the cert alias to use for verification
 #
-framework.crypto.jarSigning.aliasName = 
+framework.crypto.jarSigning.aliasName =
 
 
 
@@ -71,7 +71,7 @@ framework.node = <%= node.name %>
 # the node type
 framework.node.type = @framework.node.type@
 
-# 
+#
 #
 # Version of this RUNDECK implementation
 #
@@ -160,19 +160,19 @@ framework.centraldispatcher.classname = com.dtolabs.client.services.RundeckAPICe
 #
 framework.server.username = <%= @admin_user %>
 framework.server.password = <%= @admin_pass %>
-framework.server.hostname = localhost
-framework.server.name = localhost
+framework.server.hostname = <%= node['rundeck']['hostname'] %>
+framework.server.name = <%= node['rundeck']['hostname'] %>
 framework.server.port = <%= node['rundeck']['port'] %>
-framework.server.url = http://localhost:<%= node['rundeck']['port'] %>
+framework.server.url = http://<%= node['rundeck']['hostname'] %>:<%= node['rundeck']['port'] %>
 
 #
 # URL to Rundeck
 #
-framework.rundeck.url = http://localhost:<%= node['rundeck']['port'] %>
+framework.rundeck.url = http://<%= node['rundeck']['hostname'] %>:<%= node['rundeck']['port'] %>
 
 #
 # ssh keypath
-#  
+#
 framework.ssh.keypath = /var/lib/rundeck/.ssh/id_rsa
 
 #

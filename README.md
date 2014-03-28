@@ -55,6 +55,8 @@ Attributes are split in files semantically:
 
 * `node['rundeck']['node_name']` - The Rundeck node name. Defaults to `node.name`
 
+* `node['rundeck']['hostname']` - The hostname Rundeck servers from.
+
 * `node['rundeck']['port']` - The port Rundeck HTTP server runs on.
 
 * `node['rundeck']['log4j_port']` - The Rundeck Log4J port.

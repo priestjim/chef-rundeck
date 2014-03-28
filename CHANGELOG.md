@@ -8,6 +8,7 @@ This file is used to list changes made in each version of chef-rundeck.
 * Moved chef-rundeck gem to the official one
 * Implemented plugin LWRP
 * Fixed double startup issue with Upstart supporting systems
+* Made Rundeck hostname configurable
 
 ## 0.2.1
 
