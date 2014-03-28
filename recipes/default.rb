@@ -215,7 +215,7 @@ end
 file '/etc/init/rundeckd.override' do
 	action :create
 	content 'manual'
-	only_if { if platform?('ubuntu') && node['platform_version'].to_f >= 12.04 }
+	only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 }
 end
 
 service 'rundeckd' do
