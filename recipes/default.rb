@@ -212,16 +212,13 @@ unless adminobj['ssh_key'].nil? || adminobj['ssh_key'].empty?
 
 end
 
-if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
-	service 'rundeck-init' do
-		service_name 'rundeckd'
-		provider Chef::Provider::Service::Init::Debian
-		action :disable
-	end
+file '/etc/init/rundeckd.override' do
+	action :create
+	content 'manual'
+	only_if { if platform?('ubuntu') && node['platform_version'].to_f >= 12.04 }
 end
 
 service 'rundeckd' do
-	provider(Chef::Provider::Service::Upstart) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
 	supports :status => true, :restart => true
 	action [ :enable, :start ]
 end
