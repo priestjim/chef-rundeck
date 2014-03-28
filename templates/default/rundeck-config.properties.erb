@@ -6,7 +6,7 @@ rdeck.base = /var/lib/rundeck
 rss.enabled = <%= node['rundeck']['public_rss'] %>
 
 reportservice.log4j.port = <%= node['rundeck']['log4j_port'] %>
-grails.serverURL = http://localhost:<%= node['rundeck']['port'] %>
+grails.serverURL = http://<%= node['rundeck']['hostname'] %>:<%= node['rundeck']['port'] %>
 dataSource.dbCreate = update
 dataSource.url = jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true
 
