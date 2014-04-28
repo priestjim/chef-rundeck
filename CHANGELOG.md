@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of chef-rundeck.
 
+## 0.3.1
+
+* Allow the rundeck profile to set authentication file and name via attributes
+
 ## 0.3.0
 
 * Logic change on admin data bag and Chef credentials fetching
