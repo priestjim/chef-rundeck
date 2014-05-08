@@ -39,6 +39,10 @@ default['rundeck']['public_rss']        = false
 default['rundeck']['logging_level']     = 'INFO'
 default['rundeck']['partial_search']    = true
 
+# Authentication Configuration - Used to configure the profile file in /etc/rundeck when ldap or similar auth method
+default['rundeck']['authentication']['file']  = 'jaas-loginmodule.conf'
+default['rundeck']['authentication']['name']  = 'RDpropertyfilelogin'
+
 # Administrator data bag
 default['rundeck']['admin']['encrypted_data_bag'] = true
 default['rundeck']['admin']['data_bag']           = 'credentials'

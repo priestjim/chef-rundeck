@@ -65,6 +65,10 @@ Attributes are split in files semantically:
 
 * `node['rundeck']['logging_level']` - The default logging level for Rundeck.
 
+* `node['rundeck']['authentication']['file']` - The default authentication file to use for rundeck profile.
+
+* `node['rundeck']['authentication']['name']` - The default authentication name to use for rundeck profile.
+
 * `node['rundeck']['admin']['encrypted_data_bag']` - Enables loading the Rundeck administrator
   credentials using Chef encrypted data bags instead of simple ones.
 

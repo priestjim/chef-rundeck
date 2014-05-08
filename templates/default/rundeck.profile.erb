@@ -17,8 +17,8 @@ fi
 export CLI_CP=$(find /var/lib/rundeck/cli -name \*.jar -printf %p:)
 export BOOTSTRAP_CP=$(find /var/lib/rundeck/bootstrap -name \*.jar -printf %p:)
 
-export RDECK_JVM="-server -Djava.security.auth.login.config=/etc/rundeck/jaas-loginmodule.conf \
-	-Dloginmodule.name=RDpropertyfilelogin \
+export RDECK_JVM="-server -Djava.security.auth.login.config=/etc/rundeck/<%= node['rundeck']['authentication']['file'] %> \
+	-Dloginmodule.name=<%= node['rundeck']['authentication']['name'] %> \
 	-Drdeck.config=/etc/rundeck \
 	-Drdeck.base=/var/lib/rundeck \
 	-Drundeck.server.configDir=/etc/rundeck \
