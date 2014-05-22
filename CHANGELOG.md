@@ -1,6 +1,9 @@
 # CHANGELOG for chef-rundeck
 
 This file is used to list changes made in each version of chef-rundeck.
+## 0.3.2
+
+* Move stub file array to an attribute to allow control from wrapper cookbooks.
 
 ## 0.3.1
 

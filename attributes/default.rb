@@ -43,6 +43,9 @@ default['rundeck']['partial_search']    = true
 default['rundeck']['authentication']['file']  = 'jaas-loginmodule.conf'
 default['rundeck']['authentication']['name']  = 'RDpropertyfilelogin'
 
+# Stub config files
+default['rundeck']['stub_config_files'] = %w{ log4j.properties jaas-loginmodule.conf apitoken.aclpolicy admin.aclpolicy }
+
 # Administrator data bag
 default['rundeck']['admin']['encrypted_data_bag'] = true
 default['rundeck']['admin']['data_bag']           = 'credentials'

@@ -156,7 +156,7 @@ template '/etc/rundeck/profile' do
 end
 
 # Stub files from the cookbook, override with chef-rewind
-%w{ log4j.properties jaas-loginmodule.conf apitoken.aclpolicy admin.aclpolicy }.each do |cf|
+node['rundeck']['stub_config_files'].each do |cf|
 	cookbook_file "/etc/rundeck/#{cf}" do
 		source cf
 		owner 'rundeck'
