@@ -69,6 +69,8 @@ Attributes are split in files semantically:
 
 * `node['rundeck']['authentication']['name']` - The default authentication name to use for rundeck profile.
 
+* `node['rundeck']['stub_config_files']` - The default rundeck stub config files.  These may need to be configured by a wrapper cookbook so overriding this value to remove the files your wrapper cookbook manages is the desired usecase. 
+
 * `node['rundeck']['admin']['encrypted_data_bag']` - Enables loading the Rundeck administrator
   credentials using Chef encrypted data bags instead of simple ones.
 
