@@ -41,7 +41,7 @@ when 'debian'
 	# Added --force-depends since Rundeck hard-depends on Java 6 but will run on Java 7 well enough
 	dpkg_package "#{Chef::Config['file_cache_path']}/rundeck-#{node['rundeck']['deb_version']}.deb" do
 		action :nothing
-		options '--force-confdef --force-confask --force-depends'
+		options '--force-confdef --force-confold --force-depends'
 		notifies :delete, 'file[/etc/rundeck/realm.properties]', :immediately
 	end
 
@@ -212,6 +212,7 @@ unless adminobj['ssh_key'].nil? || adminobj['ssh_key'].empty?
 
 end
 
+# Disable upstart service, causes hangups
 file '/etc/init/rundeckd.override' do
 	action :create
 	content 'manual'
