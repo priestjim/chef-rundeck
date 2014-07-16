@@ -45,8 +45,7 @@ RDECK_JVM="$RDECK_JVM \
   -XX:+CMSClassUnloadingEnabled \
   -XX:MaxTenuringThreshold=1 \
   -XX:SurvivorRatio=8 \
-  -XX:+UseCompressedOops \
-  -XX:+AggressiveOpts"
+  -XX:+UseCompressedOops"
 
 <% if node['rundeck']['java']['enable_jmx'] %>
 # JMX connector

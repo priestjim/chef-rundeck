@@ -55,6 +55,8 @@ Attributes are split in files semantically:
 
 * `node['rundeck']['node_name']` - The Rundeck node name. Defaults to `node.name`
 
+* `node['rundeck']['url']` - The URL that Rundeck will be running on. Change it if you're running it over a reverse proxy.
+
 * `node['rundeck']['hostname']` - The hostname Rundeck servers from.
 
 * `node['rundeck']['port']` - The port Rundeck HTTP server runs on.
@@ -69,7 +71,7 @@ Attributes are split in files semantically:
 
 * `node['rundeck']['authentication']['name']` - The default authentication name to use for rundeck profile.
 
-* `node['rundeck']['stub_config_files']` - The default rundeck stub config files.  These may need to be configured by a wrapper cookbook so overriding this value to remove the files your wrapper cookbook manages is the desired usecase. 
+* `node['rundeck']['stub_config_files']` - The default rundeck stub config files.  These may need to be configured by a wrapper cookbook so overriding this value to remove the files your wrapper cookbook manages is the desired usecase.
 
 * `node['rundeck']['admin']['encrypted_data_bag']` - Enables loading the Rundeck administrator
   credentials using Chef encrypted data bags instead of simple ones.

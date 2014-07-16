@@ -4,6 +4,8 @@ This file is used to list changes made in each version of chef-rundeck.
 ## 0.3.2
 
 * Move stub file array to an attribute to allow control from wrapper cookbooks.
+* Added the "hostname" attribute
+* Removed the aggressive JVM optimization option
 
 ## 0.3.1
 

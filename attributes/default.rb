@@ -34,6 +34,7 @@ default['rundeck']['rpm_cfg_checksum']  = 'ced4921996bb10740d285439b161a0b37c93c
 default['rundeck']['node_name']         = node.name
 default['rundeck']['hostname']          = node['fqdn']
 default['rundeck']['port']              = 4440
+default['rundeck']['url']               = "http://#{node['rundeck']['hostname']}:#{node['rundeck']['port']}"
 default['rundeck']['log4j_port']        = 4435
 default['rundeck']['public_rss']        = false
 default['rundeck']['logging_level']     = 'INFO'

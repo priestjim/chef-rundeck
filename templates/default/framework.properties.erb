@@ -163,12 +163,12 @@ framework.server.password = <%= @admin_pass %>
 framework.server.hostname = <%= node['rundeck']['hostname'] %>
 framework.server.name = <%= node['rundeck']['hostname'] %>
 framework.server.port = <%= node['rundeck']['port'] %>
-framework.server.url = http://<%= node['rundeck']['hostname'] %>:<%= node['rundeck']['port'] %>
+framework.server.url = <%= node['rundeck']['url'] %>
 
 #
 # URL to Rundeck
 #
-framework.rundeck.url = http://<%= node['rundeck']['hostname'] %>:<%= node['rundeck']['port'] %>
+framework.rundeck.url = <%= node['rundeck']['url'] %>
 
 #
 # ssh keypath
