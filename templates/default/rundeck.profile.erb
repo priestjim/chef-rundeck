@@ -46,7 +46,7 @@ RDECK_JVM="$RDECK_JVM \
   -XX:MaxTenuringThreshold=1 \
   -XX:SurvivorRatio=8 \
   -XX:+UseCompressedOops \
-  -XX:MaxPermSize=256M"
+  -XX:MaxPermSize=<%= node['rundeck']['java']['perm_gen_size'] %>"
 
 <% if node['rundeck']['java']['enable_jmx'] %>
 # JMX connector

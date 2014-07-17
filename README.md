@@ -132,6 +132,8 @@ to run the partial_search for.
 
 * `node['rundeck']['java']['thread_stack_size']` - Defines the default thread stack size for the Rundeck's JVM
 
+* `node['rundeck']['java']['perm_gen_size']` - Defines the permanent generation size for the Rundeck's JVM
+
 ## proxy.rb
 
 * `node['rundeck']['proxy']['hostname']` - Defines the default hostname used in the NGINX proxy instance.
