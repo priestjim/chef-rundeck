@@ -10,3 +10,15 @@ grails.serverURL = <%= node['rundeck']['url'] %>
 dataSource.dbCreate = update
 dataSource.url = jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true
 
+grails.mail.host = <%= node['rundeck']['mail']['hostname'] %>
+grails.mail.port = <%= node['rundeck']['mail']['port'] %>
+grails.mail.default.from = <%= node['rundeck']['mail']['from'] %>
+
+<% unless node['rundeck']['mail']['username'].nil? %>
+mail.smtp.auth = true
+grails.mail.username = <%= node['rundeck']['mail']['hostname'] %>
+grails.mail.password = <%= node['rundeck']['mail']['password'] %>
+<% end %>
+<% if node['rundeck']['mail']['tls'] %>
+mail.smtp.starttls.enable = true
+<% end %>
