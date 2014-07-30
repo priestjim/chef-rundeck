@@ -1,0 +1,24 @@
+loglevel.default = "<%= node['rundeck']['logging_level'] %>"
+rdeck.base = "/var/lib/rundeck"
+
+rss.enabled = <%= node['rundeck']['public_rss'] %>
+
+reportservice.log4j.port = "<%= node['rundeck']['log4j_port'] %>"
+grails.serverURL = "<%= node['rundeck']['url'] %>"
+dataSource.dbCreate = "update"
+dataSource.url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
+
+grails.mail.host = "<%= node['rundeck']['mail']['hostname'] %>"
+grails.mail.port = <%= node['rundeck']['mail']['port'] %>
+grails.mail.default.from = "<%= node['rundeck']['mail']['from'] %>"
+
+<% unless node['rundeck']['mail']['username'].nil? %>
+grails.mail.props = ["mail.smtp.auth":"true"]
+grails.mail.username = "<%= node['rundeck']['mail']['username'] %>"
+grails.mail.password = "<%= node['rundeck']['mail']['password'] %>"
+<% end %>
+
+<% if node['rundeck']['mail']['tls'] %>
+grails.mail.props = ["mail.smtp.starttls.enable":"true", "mail.smtp.port": <%= node['rundeck']['mail']['port'] %>]
+<% end %>
+

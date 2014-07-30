@@ -137,8 +137,8 @@ template '/etc/rundeck/project.properties' do
 	notifies :restart, 'service[rundeckd]'
 end
 
-template '/etc/rundeck/rundeck-config.properties' do
-	source 'rundeck-config.properties.erb'
+template '/etc/rundeck/rundeck-config.groovy' do
+	source 'rundeck-config.groovy.erb'
 	owner 'rundeck'
 	group 'rundeck'
 	mode 00644
