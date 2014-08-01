@@ -1,6 +1,8 @@
 chef-rundeck
 ============
 
+[![Code Climate](https://codeclimate.com/github/priestjim/chef-rundeck/badges/gpa.svg)](https://codeclimate.com/github/priestjim/chef-rundeck)
+
 This is a Chef cookbook for the remote administration tool [Rundeck](http://rundeck.org). It installs the Rundeck
 package (either on deb or rpm format) and configures various aspects of the software.
 
