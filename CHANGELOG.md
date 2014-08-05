@@ -1,15 +1,21 @@
 # CHANGELOG for chef-rundeck
 
 This file is used to list changes made in each version of chef-rundeck.
+
+## 0.3.3
+
+* Rundeck version bump
+* Various JVM fixes
+* Added URL attribute to support Rundeck running behind a reverse proxy
+* Added support for external databases (PR #14)
+* Added support for SMTP mail authentication (PR #13)
+* Allow the rundeck profile to set authentication file and name via attributes
+
 ## 0.3.2
 
 * Move stub file array to an attribute to allow control from wrapper cookbooks.
 * Added the "hostname" attribute
 * Removed the aggressive JVM optimization option
-
-## 0.3.1
-
-* Allow the rundeck profile to set authentication file and name via attributes
 
 ## 0.3.0
 
