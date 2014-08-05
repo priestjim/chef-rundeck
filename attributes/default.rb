@@ -70,3 +70,15 @@ default['rundeck']['mail']['recipients_data_bag'] = 'users'
 default['rundeck']['mail']['recipients_query']    = 'notify:true'
 default['rundeck']['mail']['recipients_keys']     = { 'email' => ['email'] }
 default['rundeck']['mail']['recipients_field']    = "['email']"
+
+# External Database properties
+default['rundeck']['rdbms']['enable'] = false
+
+# Support mysql otherwise Oracle
+default['rundeck']['rdbms']['type'] = "mysql"
+default['rundeck']['rdbms']['location'] = "localhost"
+default['rundeck']['rdbms']['dbname'] = "rundeckdb"
+default['rundeck']['rdbms']['dbuser'] = "rundeckdb"
+default['rundeck']['rdbms']['dbpassword'] = "password"
+default['rundeck']['rdbms']['dialect'] = "Oracle10gDialect"
+default['rundeck']['rdbms']['port'] = "3306"

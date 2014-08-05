@@ -105,6 +105,21 @@ to run the partial_search for.
 * `node['rundeck']['mail']['recipients_field']` - Field to use for the administrative e-mail. Must be in standard hash
   notation and will be eval'ed (i.e. "['email']")
 
+* `node['rundeck']['rdbms']['enable']` - Enable external database. By default false, use internal hsqldb. If enable external database please install the driver using rundeck_plugin LWRP:
+
+    rundeck_plugin 'mysql-connector-java-5.1.31-bin.jar' do
+      checksum '5e0919e152269070b2bbce75280e35920890eace3e7a5401f2144245d89b39e2'
+      url "http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.31/mysql-connector-java-5.1.31.jar"
+    end
+
+* `node['rundeck']['rdbms']['type']` - mysql or oracle. Defaults to "mysql"
+* `node['rundeck']['rdbms']['location']` - Hostname of database. Defaults to "localhost"
+* `node['rundeck']['rdbms']['dbname']` - Database name. Defaults to "rundeckdb"
+* `node['rundeck']['rdbms']['dbuser']` - Database user. Defaults to "rundeckdb"
+* `node['rundeck']['rdbms']['dbpassword']` - Database password. Defaults to "password"
+* `node['rundeck']['rdbms']['dialect']` - Hibernate dialect. Only used when type is oracle. Defaults to "Oracle10gDialect"
+* `node['rundeck']['rdbms']['port']` - Database port. Defaults to "3306"
+
 ## chef.rb
 
 * `node['rundeck']['chef']['port']` - TCP port to run the chef-rundeck discovery service
