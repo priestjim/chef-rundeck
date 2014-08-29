@@ -52,7 +52,7 @@ template '/var/lib/rundeck/.chef/knife.rb' do
 	mode 00644
 	variables({
 		:user => adminobj['client_name'],
-		:chef_server_url => Chef::Config['chef_server_url']
+		:chef_server_url => node['rundeck']['chef']['server_url']
 	})
 	notifies :restart, 'supervisor_service[chef-rundeck]'
 end
@@ -66,11 +66,11 @@ file "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem" do
 end
 
 chef_rundeck_args = [
-	'-a', Chef::Config['chef_server_url'],
+	'-a', node['rundeck']['chef']['server_url'],
 	'-k', "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem",
 	'-c', '/var/lib/rundeck/.chef/knife.rb',
 	'-u ', node['rundeck']['ssh']['user'],
-	'-w', Chef::Config['chef_server_url'],
+	'-w', node['rundeck']['chef']['server_url'],
 	'-p', node['rundeck']['chef']['port']
 ]
 
