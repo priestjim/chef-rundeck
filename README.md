@@ -130,6 +130,8 @@ to run the partial_search for.
 
 * `node['rundeck']['chef']['partial_search']` - Enable partial search support on the chef-rundeck gem
 
+* `node['rundeck']['chef']['server_url']` - Chef Server URL to query for nodes to build Rundeck's [resources model](http://rundeck.org/docs/man5/resource-xml.html#node). Defaults to `Chef::Config['chef_server_url']`
+
 ## ssh.rb
 
 * `node['rundeck']['ssh']['user']` - Default SSH user with whom Rundeck will login to the servers.

@@ -21,4 +21,4 @@ default['rundeck']['chef']['port']           = 9998
 default['rundeck']['chef']['client_key']     = ''
 default['rundeck']['chef']['client_name']    = ''
 default['rundeck']['chef']['partial_search'] = true
-default['rundeck']['chef']['server_url'] = nil
+default['rundeck']['chef']['server_url'] = Chef::Config['chef_server_url']
