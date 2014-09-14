@@ -40,8 +40,8 @@ template "#{node[srv]['dir']}/sites-available/rundeck" do
 	end
 end
 
-if node['recipes'].include?('nginx')
+if srv == 'nginx'
   nginx_site 'rundeck'
-elsif node['recipes'].include?('openresty')
+else
   openresty_site 'rundeck'
 end
