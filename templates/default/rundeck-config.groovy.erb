@@ -33,6 +33,6 @@ grails.mail.password = "<%= node['rundeck']['mail']['password'] %>"
 <% end %>
 
 <% if node['rundeck']['mail']['tls'] %>
-grails.mail.props = ["mail.smtp.starttls.enable":"true", "mail.smtp.port": <%= node['rundeck']['mail']['port'] %>]
+grails.mail.props += ["mail.smtp.starttls.enable":"true", "mail.smtp.port": <%= node['rundeck']['mail']['port'] %>]
 <% end %>
 
