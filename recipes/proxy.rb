@@ -21,12 +21,12 @@
 
 include_recipe 'rundeck'
 
-if node['recipes'].include?('nginx')
-  srv = 'nginx'
-elsif node['recipes'].include?('openresty')
-  srv = 'openresty'
-else
+srv = node['rundeck']['proxy']['srv']
+
+unless %w( nginx openresty ).include?(srv)
   raise 'Node runlist must include one of nginx or openresty in order to support the rundeck::proxy recipe'
+else
+  include_recipe srv
 end
 
 template "#{node[srv]['dir']}/sites-available/rundeck" do
@@ -40,8 +40,8 @@ template "#{node[srv]['dir']}/sites-available/rundeck" do
 	end
 end
 
-if node['recipes'].include?('nginx')
+if srv == 'nginx'
   nginx_site 'rundeck'
-elsif node['recipes'].include?('openresty')
+else
   openresty_site 'rundeck'
 end

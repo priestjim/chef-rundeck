@@ -3,9 +3,9 @@
 source 'https://rubygems.org'
 
 group :development, :test do
-	gem 'test-kitchen', github: 'balanced-cookbooks/test-kitchen'
-	gem 'berkshelf', github: 'berkshelf/berkshelf'
-	gem 'kitchen-ec2', github: 'test-kitchen/kitchen-ec2'
+	gem 'test-kitchen'
+	gem 'berkshelf', '~> 3'
+	gem 'kitchen-ec2'
 	gem 'unf'
 	gem 'kitchen-vagrant'
 	gem 'vagrant-wrapper'

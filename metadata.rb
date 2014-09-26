@@ -14,9 +14,9 @@ depends           'java'
 depends           'logrotate'
 depends           'partial_search'
 
-recommends        'supervisor'
-recommends        'nginx'
-recommends        'openresty'
+depends           'supervisor'
+depends           'nginx'
+depends           'openresty'
 
 supports          'ubuntu', '>= 12.04'
 supports          'debian', '>= 6.0'
