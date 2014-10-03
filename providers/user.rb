@@ -53,7 +53,6 @@ action :remove do
         new_resource.updated_by_last_action(true)
         newcontent = String.new
         ::File.open(::File.join('etc','rundeck','realm.properties'), 'r').each do |line|
-          Chef::Log.info("line..: #{line.inspect}")
           newcontent += line unless line.match(/^#{new_resource.name}: /)
         end
 
@@ -81,7 +80,6 @@ action :update do
         newcontent = String.new
 
         ::File.open(::File.join('etc','rundeck','realm.properties'), 'r').each do |line|
-            Chef::Log.info("line..: #{line.inspect}")
             if line.match(/^#{new_resource.name}: /)
               newcontent +=  "#{new_auth_line}\n"
             else
