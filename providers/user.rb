@@ -20,7 +20,6 @@
 #
 
 action :create do
-
 	# Check user existense in realm.properties
 	if ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_resource.name}: /)
 		new_resource.updated_by_last_action(false)
@@ -38,11 +37,9 @@ action :create do
 			notifies :restart, 'service[rundeckd]'
 		end
 	end
-
 end
 
 action :remove do
-
 	# Check user existense in realm.properties
 	unless ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_resource.name}: /)
     Chef::Log.info("Rundeck user #{new_resource.name} does not exist!")
@@ -62,11 +59,9 @@ action :remove do
 			notifies :restart, 'service[rundeckd]'
 		end
 	end
-
 end
 
 action :update do
-
 	new_auth_line = create_auth_line(new_resource.name, new_resource.password, new_resource.encryption, new_resource.roles)
 
 	if ::File.read(::File.join('etc','rundeck','realm.properties')).match(/^#{new_auth_line}/)
@@ -92,7 +87,6 @@ action :update do
 			notifies :restart, 'service[rundeckd]'
 		end
 	end
-
 end
 
 def create_auth_line(username, password, encryption, roles)
