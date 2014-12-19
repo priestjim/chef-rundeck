@@ -78,7 +78,7 @@ chef_rundeck_args << '--partial-search true' if node['rundeck']['chef']['partial
 
 # Create a Supervisor service that runs chef-rundeck
 supervisor_service 'chef-rundeck' do
-	command "/opt/chef/embedded/bin/chef-rundeck #{chef_rundeck_args.join(' ')}"
+	command "/opt/chef/embedded/bin/ruby /opt/chef/embedded/bin/chef-rundeck #{chef_rundeck_args.join(' ')}"
 	numprocs 1
 	directory '/var/lib/rundeck'
 	autostart true
