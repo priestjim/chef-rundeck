@@ -4,3 +4,4 @@ chef_server_url          '<%= @chef_server_url %>'
 cache_type               'BasicFile'
 log_level                :info
 log_location             STDOUT
+ssl_verify_mode          <%= @ssl_verify_mode.to_sym.inspect %>

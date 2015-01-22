@@ -6,6 +6,7 @@ This file is used to list changes made in each version of chef-rundeck.
 
 * Custom properties support for framework and project properties files
 * Added chef-rundeck cache timeout
+* Added chef-rundeck SSL verify mode
 
 ## 0.3.3
 

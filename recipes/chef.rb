@@ -52,6 +52,7 @@ template '/var/lib/rundeck/.chef/knife.rb' do
 	mode 00644
 	variables({
 		:user => adminobj['client_name'],
+		:ssl_verify_mode => node['rundeck']['chef']['ssl_verify_mode'],
 		:chef_server_url => node['rundeck']['chef']['server_url']
 	})
 	notifies :restart, 'supervisor_service[chef-rundeck]'
