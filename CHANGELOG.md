@@ -5,6 +5,7 @@ This file is used to list changes made in each version of chef-rundeck.
 ## 0.3.4
 
 * Custom properties support for framework and project properties files
+* Added chef-rundeck cache timeout
 
 ## 0.3.3
 

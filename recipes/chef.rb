@@ -69,7 +69,8 @@ chef_rundeck_args = [
 	'-a', node['rundeck']['chef']['server_url'],
 	'-k', "/var/lib/rundeck/.chef/#{adminobj['client_name']}.pem",
 	'-c', '/var/lib/rundeck/.chef/knife.rb',
-	'-u ', node['rundeck']['ssh']['user'],
+	'-u', node['rundeck']['ssh']['user'],
+	'-t', node['rundeck']['chef']['cache_timeout'],
 	'-w', node['rundeck']['chef']['server_url'],
 	'-p', node['rundeck']['chef']['port']
 ]

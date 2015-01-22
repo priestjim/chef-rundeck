@@ -132,6 +132,8 @@ to run the partial_search for.
 
 * `node['rundeck']['chef']['partial_search']` - Enable partial search support on the chef-rundeck gem
 
+* `node['rundeck']['chef']['cache_timeout']` - Sets the time chef-rundeck will cache the Chef server results, in seconds
+
 * `node['rundeck']['chef']['server_url']` - Chef Server URL to query for nodes to build Rundeck's [resources model](http://rundeck.org/docs/man5/resource-xml.html#node). Defaults to `Chef::Config['chef_server_url']`
 
 ## ssh.rb
