@@ -196,3 +196,8 @@ framework.ssh.timeout = <%= node['rundeck']['ssh']['timeout'] %>
 # framework.log.run-exec.console.format =[%user@%node %command][%level] %message
 #
 framework.log.run-exec.console.format =[%user@%node %command][%level] %message
+
+# Custom framework options
+<% node['rundeck']['custom_properties']['framework'].each do |key, value| -%>
+<%= key %> = <%= value %>
+<% end %>

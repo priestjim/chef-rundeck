@@ -82,3 +82,7 @@ default['rundeck']['rdbms']['dbuser'] = "rundeckdb"
 default['rundeck']['rdbms']['dbpassword'] = "password"
 default['rundeck']['rdbms']['dialect'] = "Oracle10gDialect"
 default['rundeck']['rdbms']['port'] = "3306"
+
+# Custom properties hashes
+default['rundeck']['custom_properties']['framework'] = Hash.new
+default['rundeck']['custom_properties']['project'] = Hash.new

@@ -118,7 +118,9 @@ to run the partial_search for.
 * `node['rundeck']['rdbms']['dbuser']` - Database user. Defaults to "rundeckdb"
 * `node['rundeck']['rdbms']['dbpassword']` - Database password. Defaults to "password"
 * `node['rundeck']['rdbms']['dialect']` - Hibernate dialect. Only used when type is oracle. Defaults to "Oracle10gDialect"
-* `node['rundeck']['rdbms']['port']` - Database port. Defaults to "3306"
+
+* `node['rundeck']['custom_properties']['framework']` - Key/value pairs of custom properties present in framework.properties
+* `node['rundeck']['custom_properties']['project']` = Key/value pairs of custom properties present in project.properties
 
 ## chef.rb
 
