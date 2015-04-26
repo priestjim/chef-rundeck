@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# Staring from version 2.5.0-1-GA rundeck requires jdk version 7
+default['java']['jdk_version'] = '7'
+
 default['rundeck']['java']['enable_jmx'] = false
 default['rundeck']['java']['allocated_memory'] = "#{(node['memory']['total'].to_i * 0.5 ).floor / 1024}m"
 default['rundeck']['java']['thread_stack_size'] = '256k'

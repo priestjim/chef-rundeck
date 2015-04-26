@@ -148,6 +148,8 @@ to run the partial_search for.
 
 ## java.rb
 
+* `node['java']['jdk_version']` - Sets the version of jdk, defaults to `7`
+
 * `node['rundeck']['java']['enable_jmx']` - Defines a set of flags in order to enable JMX monitoring on the
   Rundeck installation
 
