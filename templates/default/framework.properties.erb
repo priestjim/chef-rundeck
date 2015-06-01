@@ -66,7 +66,7 @@ framework.node.hostname = <%= node['fqdn'] %>
 framework.node.name = <%= node['rundeck']['node_name'] %>
 
 # for backwards compatability
-framework.node = <%= node.name %>
+framework.node = <%= node['rundeck']['node_name'] %>
 
 # the node type
 framework.node.type = @framework.node.type@

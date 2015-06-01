@@ -289,6 +289,26 @@ Usage
 Include the recipe on your node or role. Modify the
 attributes as required in a role cookbook to change how various
 configuration variables are applied per the attributes section above.
+It is important the data bags are properly set up.  An example is given
+below for the minimum requirements to converge this cookbook.
+
+The default 'credentials' data bag:
+
+```
+{
+   "id": "rundeck",
+   "username": "admin",
+   "password": "admin"
+}
+```
+
+The default 'users' data bag:
+
+```
+{
+   "id": "users"
+}
+```
 
 If you need to alter the location of various cookbook_file
 directives, use `chef_rewind`.
