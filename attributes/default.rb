@@ -20,15 +20,15 @@
 #
 
 # Package
-default['rundeck']['deb_version']       = '2.5.0-1-GA'
+default['rundeck']['deb_version']       = '2.5.1-1-GA'
 default['rundeck']['deb_url']           = "http://dl.bintray.com/rundeck/rundeck-deb/rundeck-#{node['rundeck']['deb_version']}.deb"
-default['rundeck']['deb_checksum']      = 'c84d049df00b238cbcf20d26bb442185df32c6aefef1df21056e0e8ab6c0e26d'
+default['rundeck']['deb_checksum']      = '2399dbf70b359c57a1d3a0e1e963922cb48ca98c40c3e9f93595b73a73d9868a'
 
-default['rundeck']['rpm_version']       = '2.5.0-1.6.GA'
+default['rundeck']['rpm_version']       = '2.5.1-1.7.GA'
 default['rundeck']['rpm_url']           = "http://download.rundeck.org/rpm/rundeck-#{node['rundeck']['rpm_version']}.noarch.rpm"
 default['rundeck']['rpm_cfg_url']       = "http://download.rundeck.org/rpm/rundeck-config-#{node['rundeck']['rpm_version']}.noarch.rpm"
-default['rundeck']['rpm_checksum']      = '24bf69f9ce2aeab9da789193b488160c4b0eb771fe9cc82c7b53fef8ddf653dc'
-default['rundeck']['rpm_cfg_checksum']  = '879005da4c3292fde4a65433287a0ff301478e7077818b2a42030b4ede4dc0d2'
+default['rundeck']['rpm_checksum']      = 'e0ca697c584816d6e7f7b2415616c6d1ed027043aa28461c6fd6b7cc06694c94'
+default['rundeck']['rpm_cfg_checksum']  = 'd619005f550f491ec9a8828843edc348435a9de6ed3011f4de07aa707605852c'
 
 # Framework configuration
 default['rundeck']['node_name']         = node.name
