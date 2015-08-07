@@ -92,4 +92,5 @@ supervisor_service 'chef-rundeck' do
 	user 'rundeck'
 	redirect_stderr true
 	action :enable
+	environment({'HOME' => '/var/lib/rundeck'})
 end
