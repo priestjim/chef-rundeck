@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of chef-rundeck.
 
+## 0.3.5
+
+* Bump Rundeck version
+
 ## 0.3.4
 
 * Custom properties support for framework and project properties files
