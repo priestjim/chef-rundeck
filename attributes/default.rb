@@ -86,3 +86,4 @@ default['rundeck']['rdbms']['port'] = "3306"
 # Custom properties hashes
 default['rundeck']['custom_properties']['framework'] = Hash.new
 default['rundeck']['custom_properties']['project'] = Hash.new
+default['rundeck']['custom_properties']['global'] = Hash.new
