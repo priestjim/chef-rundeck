@@ -36,3 +36,7 @@ grails.mail.password = "<%= node['rundeck']['mail']['password'] %>"
 grails.mail.props += ["mail.smtp.starttls.enable":"true", "mail.smtp.port": <%= node['rundeck']['mail']['port'] %>]
 <% end %>
 
+# Custom global options
+<% node['rundeck']['custom_properties']['global'].each do |key, value| -%>
+<%= key %> = "<%= value %>"
+<% end %>
