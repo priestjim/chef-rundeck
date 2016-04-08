@@ -1,4 +1,4 @@
-description: Admin, all access.
+description: Admin project level access control. Applies to resources within a specific project.
 context:
   project: '.*' # all projects
 for:
@@ -15,7 +15,7 @@ by:
 
 ---
 
-description: Admin, all access.
+description: Admin Application level access control, applies to creating/deleting projects, admin of user profiles, viewing projects and reading system information.
 context:
   application: 'rundeck'
 for:
@@ -23,5 +23,10 @@ for:
     - allow: '*' # allow create of projects
   project:
     - allow: '*' # allow view/admin of all projects
+  project_acl:
+    - allow: '*' # allow modifying project-specific ACL files
+  storage:
+    - allow: '*' # allow access for /ssh-key/* storage content
+
 by:
   group: admin
