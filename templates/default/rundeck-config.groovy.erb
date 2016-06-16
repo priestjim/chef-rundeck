@@ -1,35 +1,35 @@
-loglevel.default = "<%= node['rundeck']['logging_level'] %>"
-rdeck.base = "/var/lib/rundeck"
+loglevel.default = <%= node['rundeck']['logging_level'] %>
+rdeck.base = /var/lib/rundeck
 
 rss.enabled = <%= node['rundeck']['public_rss'] %>
 
-reportservice.log4j.port = "<%= node['rundeck']['log4j_port'] %>"
-grails.serverURL = "<%= node['rundeck']['url'] %>"
-dataSource.dbCreate = "update"
+reportservice.log4j.port = <%= node['rundeck']['log4j_port'] %>
+grails.serverURL = <%= node['rundeck']['url'] %>
+dataSource.dbCreate = update
 
 <% if node['rundeck']['rdbms']['enable'] %>
   <% if node['rundeck']['rdbms']['type'] == 'oracle' %>
-dataSource.url = "jdbc:oracle:thin:@:<%= node['rundeck']['rdbms']['location'] %>:<%= node['rundeck']['rdbms']['port'] %>:XE"
-dataSource.driverClassName = "oracle.jdbc.driver.OracleDriver"
-dataSource.dialect = "org.hibernate.dialect.<%= node['rundeck']['rdbms']['dialect'] %>"
+dataSource.url = jdbc:oracle:thin:@:<%= node['rundeck']['rdbms']['location'] %>:<%= node['rundeck']['rdbms']['port'] %>:XE
+dataSource.driverClassName = oracle.jdbc.driver.OracleDriver
+dataSource.dialect = org.hibernate.dialect.<%= node['rundeck']['rdbms']['dialect'] %>
   <% else %>
-dataSource.url = "jdbc:mysql://<%= node['rundeck']['rdbms']['location'] %>:<%= node['rundeck']['rdbms']['port'] %>/<%= node['rundeck']['rdbms']['dbname'] %>?autoReconnect=true"
+dataSource.url = jdbc:mysql://<%= node['rundeck']['rdbms']['location'] %>:<%= node['rundeck']['rdbms']['port'] %>/<%= node['rundeck']['rdbms']['dbname'] %>?autoReconnect=true
   <% end %>
 
-dataSource.username = "<%= node['rundeck']['rdbms']['dbuser'] %>"
-dataSource.password = "<%= node['rundeck']['rdbms']['dbpassword'] %>"
+dataSource.username = <%= node['rundeck']['rdbms']['dbuser'] %>
+dataSource.password = <%= node['rundeck']['rdbms']['dbpassword'] %>
 <% else %>
-dataSource.url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
+dataSource.url = jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true
 <% end %>
 
-grails.mail.host = "<%= node['rundeck']['mail']['hostname'] %>"
+grails.mail.host = <%= node['rundeck']['mail']['hostname'] %>
 grails.mail.port = <%= node['rundeck']['mail']['port'] %>
-grails.mail.default.from = "<%= node['rundeck']['mail']['from'] %>"
+grails.mail.default.from = <%= node['rundeck']['mail']['from'] %>
 
 <% unless node['rundeck']['mail']['username'].nil? %>
 grails.mail.props = ["mail.smtp.auth":"true"]
-grails.mail.username = "<%= node['rundeck']['mail']['username'] %>"
-grails.mail.password = "<%= node['rundeck']['mail']['password'] %>"
+grails.mail.username = <%= node['rundeck']['mail']['username'] %>
+grails.mail.password = <%= node['rundeck']['mail']['password'] %>
 <% end %>
 
 <% if node['rundeck']['mail']['tls'] %>
@@ -38,5 +38,5 @@ grails.mail.props += ["mail.smtp.starttls.enable":"true", "mail.smtp.port": <%= 
 
 // Custom global options
 <% node['rundeck']['custom_properties']['global'].each do |key, value| -%>
-<%= key %> = "<%= value %>"
+<%= key %> = <%= value %>
 <% end %>
