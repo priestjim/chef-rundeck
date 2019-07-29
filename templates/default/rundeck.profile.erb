@@ -36,6 +36,7 @@ RDECK_JVM="$RDECK_JVM \
   -Xmx<%= node['rundeck']['java']['allocated_memory'] %> \
   -Xss<%= node['rundeck']['java']['thread_stack_size'] %> \
   -Djava.net.preferIPv4Stack=true \
+  -Dsun.net.client.defaultReadTimeout=<%= node['rundeck']['java']['sun_net_client_defaultReadTimeout'] %> \
   -XX:+UseParNewGC \
   -XX:+UseConcMarkSweepGC \
   -XX:+CMSParallelRemarkEnabled \

@@ -24,3 +24,6 @@ default['rundeck']['java']['enable_jmx'] = false
 default['rundeck']['java']['allocated_memory'] = "#{(node['memory']['total'].to_i * 0.5 ).floor / 1024}m"
 default['rundeck']['java']['thread_stack_size'] = '256k'
 default['rundeck']['java']['perm_gen_size'] = '512m'
+# Oracle-specific command-line flag to prevent network socket reads from hanging indefinitely
+# https://docs.oracle.com/javase/8/docs/technotes/guides/net/properties.html
+default['rundeck']['java']['sun_net_client_defaultReadTimeout'] = '43200000'
